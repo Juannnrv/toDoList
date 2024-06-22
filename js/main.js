@@ -20,12 +20,14 @@ updateDateTime();
 setInterval(updateDateTime, 1000);
 
 
-import { getAllTasksOnHold } from './modules/onHold.js';
+import { AddTaskOnHold, getAllTasksOnHold } from './modules/onHold.js';
 import { getAllTasksReady } from './modules/ready.js';
 import { onHold, ready } from './components/task.js';
 
 let main_onHold = document.querySelector('.main_onHold');
 let main_ready = document.querySelector('.main_ready');
+let search = document.querySelector('.search');
+let btn = document.querySelector('#btn');
 
 addEventListener('DOMContentLoaded', async() => {
     let tasksOnHold = await getAllTasksOnHold();
@@ -33,4 +35,35 @@ addEventListener('DOMContentLoaded', async() => {
     
     main_onHold.innerHTML = await onHold(tasksOnHold);
     main_ready.innerHTML = await ready(tasksReady);
+
+    search.addEventListener("change", async (e) => {
+        let newTask = e.target.value;
+
+        await AddTaskOnHold({ task: newTask, status: "On hold" });
+    
+        tasksOnHold = await getAllTasksOnHold(); 
+        main_onHold.innerHTML = await onHold(tasksOnHold);
+    
+        search.value = "";
+    
+        setTimeout(() => {
+            location.reload();
+        }, 500); 
+    });
+
+    btn.addEventListener("click", async (e) => {
+        let newTask = task.value;
+
+        await AddTaskOnHold({ task: newTask, status: "On hold" });
+    
+        tasksOnHold = await getAllTasksOnHold(); 
+        main_onHold.innerHTML = await onHold(tasksOnHold);
+    
+        task.value = "";
+    
+        setTimeout(() => {
+            location.reload();
+        }, 500); 
+    });
+    
 });
