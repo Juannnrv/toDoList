@@ -1,4 +1,3 @@
-
 // Time
 const dateTimeParagraph = document.querySelector('#time');
 function updateDateTime() {
@@ -19,27 +18,26 @@ function updateDateTime() {
 updateDateTime();
 setInterval(updateDateTime, 1000);
 
-
-import { AddTaskOnHold, getAllTasksOnHold } from './modules/onHold.js';
+import { addTaskOnHold, getAllTasksOnHold, deleteTaskOnHold } from './modules/onHold.js';
 import { getAllTasksReady } from './modules/ready.js';
 import { onHold, ready } from './components/task.js';
 
 let main_onHold = document.querySelector('.main_onHold');
 let main_ready = document.querySelector('.main_ready');
 let search = document.querySelector('.search');
-let btn = document.querySelector('#btn');
 
-addEventListener('DOMContentLoaded', async() => {
+addEventListener('DOMContentLoaded', async () => {
     let tasksOnHold = await getAllTasksOnHold();
     let tasksReady = await getAllTasksReady();
     
     main_onHold.innerHTML = await onHold(tasksOnHold);
     main_ready.innerHTML = await ready(tasksReady);
 
+    // POST
     search.addEventListener("change", async (e) => {
         let newTask = e.target.value;
 
-        await AddTaskOnHold({ task: newTask, status: "On hold" });
+        await addTaskOnHold({ task: newTask, status: "On hold" });
     
         tasksOnHold = await getAllTasksOnHold(); 
         main_onHold.innerHTML = await onHold(tasksOnHold);
@@ -54,7 +52,7 @@ addEventListener('DOMContentLoaded', async() => {
     btn.addEventListener("click", async (e) => {
         let newTask = task.value;
 
-        await AddTaskOnHold({ task: newTask, status: "On hold" });
+        await addTaskOnHold({ task: newTask, status: "On hold" });
     
         tasksOnHold = await getAllTasksOnHold(); 
         main_onHold.innerHTML = await onHold(tasksOnHold);
@@ -65,5 +63,15 @@ addEventListener('DOMContentLoaded', async() => {
             location.reload();
         }, 500); 
     });
-    
+
+    // DELETE
+    document.querySelectorAll('.trash').forEach(element => {
+        element.addEventListener('click', async (e) => {
+            let id = e.target.dataset.id;
+
+            await deleteTaskOnHold(id);
+            tasksOnHold = await getAllTasksOnHold();
+            e.target.parentElement.parentElement.remove();
+        });
+    });
 });

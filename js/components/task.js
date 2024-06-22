@@ -1,4 +1,3 @@
-
 export const onHold = async(tasksOnHold) => {
     let plantilla = "";
     tasksOnHold.forEach(task => {
@@ -6,8 +5,8 @@ export const onHold = async(tasksOnHold) => {
         <div class="onHold">
             <p>${task.task}</p>
             <div class="tasks">
-                <img id="check" src="./storage/img/check.png" alt="check">
-                <img id="trash" src="./storage/img/trash.png" alt="trash">
+                <img class="check" src="./storage/img/check.png" alt="check" data-id= ${task.id}>
+                <img class="trash" src="./storage/img/trash.png" alt="trash" data-id= ${task.id}>
             </div>
         </div>`;
     });
@@ -21,8 +20,8 @@ export const ready = async(tasksReady) => {
         <div class="ready">
             <del>${task.task}</del>
             <div class="tasks">
-                <img id="check" src="./storage/img/check.png" alt="check">
-                <img id="trash" src="./storage/img/trash.png" alt="trash">
+                <img class="check" src="./storage/img/check.png" alt="check" data-id= ${task.id}>
+                <img class="trash" src="./storage/img/trash.png" alt="trash" data-id= ${task.id}>
             </div>
         </div>`;
     });
