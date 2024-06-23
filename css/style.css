@@ -75,7 +75,7 @@ header h1 {
     width: 28vw;
     background-color: var(--color-2);
     color: var(--color-3);
-}	
+}   
 
 .search button {
     width: 5vw;
@@ -152,3 +152,68 @@ header h1 {
     filter: brightness(1.2);
 }
 
+@media screen and (max-width: 1170px) {
+    header h1 {
+        font-size: 80px; 
+        margin-top: 30px;
+        margin-bottom: 30px;
+    }
+
+    .search input {
+        width: 60vw; 
+    }
+
+    .search button {
+        width: 10vw; 
+    }
+
+    .onHold, .ready {
+        width: 90%; 
+        padding: 10px 15px;
+    }
+
+    .onHold p, .ready del {
+        font-size: 16px;
+    }
+
+    .main_onHold, .main_ready {
+        width: 218px;
+    }
+
+    .main_onHold img, .main_ready img {
+        width: 25px; 
+    }
+}
+
+@media screen and (max-width: 600px) {
+    header h1 {
+        font-size: 60px; 
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    .search input {
+        width: 70vw; 
+    }
+
+    .search button {
+        width: 15vw; 
+    }
+
+    .onHold, .ready {
+        width: 100%; 
+        padding: 10px 10px;
+    }
+
+    .onHold p, .ready del {
+        font-size: 14px; 
+    }
+
+    .main_onHold, .main_ready {
+        width: 218px;
+    }
+
+    .main_onHold img, .main_ready img {
+        width: 20px; 
+    }
+}
