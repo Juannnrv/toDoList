@@ -18,7 +18,7 @@ function updateDateTime() {
 updateDateTime();
 setInterval(updateDateTime, 1000);
 
-import { addTaskOnHold, getAllTasksOnHold, deleteTaskOnHold } from './modules/onHold.js';
+import { addTaskOnHold, getAllTasksOnHold, deleteTaskOnHold, changeStatusTask } from './modules/onHold.js';
 import { getAllTasksReady } from './modules/ready.js';
 import { onHold, ready } from './components/task.js';
 
@@ -43,35 +43,45 @@ addEventListener('DOMContentLoaded', async () => {
         main_onHold.innerHTML = await onHold(tasksOnHold);
     
         search.value = "";
-    
+
         setTimeout(() => {
             location.reload();
-        }, 500); 
-    });
+        }, 10); 
 
-    btn.addEventListener("click", async (e) => {
-        let newTask = task.value;
-
-        await addTaskOnHold({ task: newTask, status: "On hold" });
-    
-        tasksOnHold = await getAllTasksOnHold(); 
-        main_onHold.innerHTML = await onHold(tasksOnHold);
-    
-        task.value = "";
-    
-        setTimeout(() => {
-            location.reload();
-        }, 500); 
     });
 
     // DELETE
-    document.querySelectorAll('.trash').forEach(element => {
-        element.addEventListener('click', async (e) => {
+    document.querySelectorAll('.trash').forEach(trashBtn => {
+        trashBtn.addEventListener('click', async (e) => {
             let id = e.target.dataset.id;
 
             await deleteTaskOnHold(id);
             tasksOnHold = await getAllTasksOnHold();
             e.target.parentElement.parentElement.remove();
+
+            setTimeout(() => {
+                location.reload();
+            }, 10); 
         });
     });
+
+    // PUT  
+    document.querySelectorAll('.check').forEach(checkBtn => {
+        checkBtn.addEventListener('click', async (e) => {
+            let id = e.target.dataset.id;
+            await changeStatusTask(id, 'ready');
+            
+            let taskContainer = e.target.closest('.onHold');
+                taskContainer.classList.remove('onHold');
+                taskContainer.classList.add('ready');
+
+            tasksOnHold = await getAllTasksOnHold(); 
+            main_onHold.innerHTML = await onHold(tasksOnHold);
+
+            setTimeout(() => {
+                location.reload();
+            }, 10); 
+        });
+    });
+
 });

@@ -35,3 +35,17 @@ export const deleteTaskOnHold = async(id) => {
     let data = await res.json();
     return data;
 }
+
+// PUT
+export const changeStatusTask = async(id, status) => {
+    const url = `https://6675cabaa8d2b4d072f179da.mockapi.io/list/${id}`;
+    const options = { 
+        method: "PUT",
+        headers: {"content-type": "application/json"},
+        body: JSON.stringify({ status }),
+    };
+
+    let res = await fetch(url, options);
+    let data = await res.json();
+    return data;
+}
